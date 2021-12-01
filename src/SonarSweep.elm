@@ -2,8 +2,9 @@ module SonarSweep exposing (..)
 
 import List.Extra exposing (getAt)
 
--- This is the problem for Day One
 
+
+-- This is the problem for Day One
 -- Sample input
 
 
@@ -20,55 +21,26 @@ input =
     , 263
     ]
 
+count : List Int -> Int
+count depths =
+   let
+       pairs = List.Extra.zip depths (List.drop 1 depths)
+    in
+        List.map (\(first, second) -> second - first) pairs
+            |> List.filter (\a -> a > 0)
+            |> List.length
 
-countDepthIncrease : List Int -> Int -> Int
-countDepthIncrease depths depthChanges =
-    case depths of
-        [] ->
-            depthChanges
+countWindows : List Int -> Int
+countWindows depths =
+    let
+        windows = List.Extra.zip3 depths (List.drop 1 depths) (List.drop 2 depths)
+            |> List.map (\(f, s, t) -> f + s + t)
 
-        _ ->
-            let
-                prevDepth =
-                    case getAt 0 depths of
-                        Nothing ->
-                            7766279631452241920
-
-                        Just depth ->
-                            depth
-
-                currentDepth =
-                    case getAt 1 depths of
-                        Nothing ->
-                            0
-
-                        Just depth ->
-                            depth
-
-                newChanges =
-                    if currentDepth > prevDepth then
-                        depthChanges + 1
-
-                    else
-                        depthChanges
-            in
-            countDepthIncrease (List.drop 1 depths) newChanges
-
-countMeasurementWindowIncrease : List Int -> Int -> Int
-countMeasurementWindowIncrease depths depthChanges =
-    if List.length depths < 4
-    then
-        depthChanges
-    else
-        let
-            curWindow = List.foldl (+) 0 <| List.take 3 depths
-            nextWindow = List.foldl (+) 0 <| List.take 3 (List.drop 1 depths)
-            newChanges = if curWindow < nextWindow then
-                        depthChanges + 1
-                    else
-                        depthChanges
-        in
-            countMeasurementWindowIncrease (List.drop 1 depths) newChanges
+        windowsAsPairs = List.Extra.zip windows (List.drop 1 windows)
+    in
+        List.map (\(first, second) -> second - first) windowsAsPairs
+            |> List.filter (\a -> a > 0)
+            |> List.length
 
 
 realInput =
