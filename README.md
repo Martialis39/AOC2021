@@ -10,3 +10,4 @@ Spoiler alert: Judging by my past performance, I will probably bow out at around
 Problem 8.
 
 Day 1: Sonar Sweep
+Day 2: Dive
