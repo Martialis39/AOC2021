@@ -11,3 +11,4 @@ Problem 8.
 
 Day 1: Sonar Sweep
 Day 2: Dive
+Day 3: Binary Diagnostic
